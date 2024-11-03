@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List Application</title>
+    <style>
+        /* Reset some default styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e0f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Main container styling */
+        .todo-container {
+            background-color: #ffffff;
+            padding: 25px;
+            width: 320px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease;
+        }
+        .todo-container:hover {
+            transform: scale(1.02);
+        }
+
+        h2 {
+            text-align: center;
+            color: #00796b;
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .task-input {
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        .task-input input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            outline: none;
+            transition: border 0.2s ease;
+        }
+        .task-input input[type="text"]:focus {
+            border-color: #00796b;
+        }
+
+        .task-input button {
+            padding: 10px;
+            margin-left: 8px;
+            background-color: #00796b;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .task-input button:hover {
+            background-color: #004d40;
+        }
+
+        ul.task-list {
+            list-style-type: none;
+            padding: 0;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        ul.task-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+
+        ul.task-list li.completed {
+            background-color: #c8e6c9;
+            color: #4caf50;
+            text-decoration: line-through;
+        }
+
+        .task-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .task-actions button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            color: #888;
+            transition: color 0.2s ease;
+        }
+        .task-actions button:hover {
+            color: #ff5252;
+        }
+    </style>
+</head>
+<body>
+
+<div class="todo-container">
+    <h2>My To-Do List</h2>
+    <div class="task-input">
+        <input type="text" id="taskInput" placeholder="Add a new task..." />
+        <button onclick="addTask()">Add</button>
+    </div>
+    <ul class="task-list" id="taskList">
+        <!-- Tasks will appear here -->
+    </ul>
+</div>
+
+<script>
+    function addTask() {
+        const taskInput = document.getElementById("taskInput");
+        const taskList = document.getElementById("taskList");
+
+        if (taskInput.value.trim() === "") {
+            alert("Please enter a task.");
+            return;
+        }
+
+        const taskItem = document.createElement("li");
+        taskItem.innerHTML = `
+            <span onclick="toggleTask(this)">${taskInput.value}</span>
+            <div class="task-actions">
+                <button onclick="deleteTask(this)">🗑️</button>
+            </div>
+        `;
+        taskList.appendChild(taskItem);
+        taskInput.value = "";
+    }
+
+    function toggleTask(taskElement) {
+        taskElement.parentElement.classList.toggle("completed");
+    }
+
+    function deleteTask(button) {
+        const taskItem = button.parentElement.parentElement;
+        taskItem.remove();
+    }
+</script>
+
+</body>
+</html>
